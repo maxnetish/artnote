@@ -1,0 +1,6 @@
+ul
+    li(ng-repeat='record in records')
+        p {{record.date | date : "d.MM.yy H:mm Z"}}
+        a(href='#/record/{{record._id}}')
+            p {{record.title}}
+

@@ -34,7 +34,7 @@ router.get('/record/:recordId', function (req, res) {
     }
 
     models.Record.findById(id, function (err, record) {
-        if (record.userId !== userId) {
+        if (record && (record.userId !== userId)) {
             err = err || {};
             err.statusCode = 403;
             err.message = "Record forbidden";

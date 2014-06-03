@@ -1,8 +1,11 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
-    script(src='javascripts/lib/angular.js')
+html(ng-app='artbookApp')
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block content
+        script(src='javascripts/lib/angular.js')
+        script(src='javascripts/lib/angular-route.js')
+        script(src='javascripts/app/app.js')
+        script(src='javascripts/app/controllers.js')
