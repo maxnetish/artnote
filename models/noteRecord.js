@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var _ = require('underscore');
 
 // Schemas
 var Record = new Schema({
@@ -28,5 +29,21 @@ var Record = new Schema({
         required: false
     }
 });
+Record.methods.updateFromFormData = function (formData) {
+    formData = formData || {};
+    if (formData.date) {
+        this.date = formData.date;
+    }
+    if (_.isString(formData.title)) {
+        this.title = formData.title;
+    }
+    if (_.isString(formData.text)) {
+        this.text = formData.text;
+    }
+    if (_.isArray(formData.tags)) {
+        this.tags = formData.tags;
+    }
+};
+
 
 module.exports = Record;
