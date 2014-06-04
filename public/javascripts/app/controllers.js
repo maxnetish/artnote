@@ -2,30 +2,26 @@
  * Created by mgordeev on 03.06.2014.
  */
 
-var artbookControllers = angular.module('artbookControllers', []);
-
-artbookControllers.controller('recordListController',
+angular.module('artbookControllers', ['dataServiceModule'])
+    .controller('recordListController',
     [
         '$scope',
-        '$http',
-        function ($scope, $http) {
-            $http.get('api/list')
-                .success(function (data) {
-                    $scope.records = data.data;
-                });
+        'dataService',
+        function ($scope, dataService) {
+            dataService.getRecords(function (records) {
+                $scope.records = records;
+            });
         }
-    ]);
-
-artbookControllers.controller('recordController',
+    ])
+    .controller('recordController',
     [
         '$scope',
-        '$http',
         '$routeParams',
-        function ($scope, $http, $routeParams) {
+        'dataService',
+        function ($scope, $routeParams, dataService) {
             $scope.recordId = $routeParams.recordId;
-            $http.get('api/record/' + $scope.recordId)
-                .success(function(data){
-                    $scope.record = data.data;
-                });
+            dataService.getRecord($scope.recordId, function (record) {
+                $scope.record = record;
+            });
         }
     ]);
