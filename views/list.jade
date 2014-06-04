@@ -1,6 +1,6 @@
 ul
     li(ng-repeat='record in records')
         p {{record.date | date : "d.MM.yy H:mm Z"}}
-        a(ng-href='#/record/{{record._id}}')
+        a(ng-href='#!/record/{{record._id}}')
             p {{record.title}}
 
