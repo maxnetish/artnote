@@ -1,5 +1,6 @@
+button(ng-disabled='disableRefresh', ng-click='refresh()') Refresh
 ul
-    li(ng-repeat='record in records')
+    li(ng-repeat='record in recordsResponse.data')
         p {{record.date | date : "d.MM.yy H:mm Z"}}
         a(ng-href='#!/record/{{record._id}}')
             p {{record.title}}

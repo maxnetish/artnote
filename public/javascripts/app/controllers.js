@@ -8,9 +8,12 @@ angular.module('artbookControllers', ['dataServiceModule'])
         '$scope',
         'dataService',
         function ($scope, dataService) {
-            dataService.getRecords(function (records) {
-                $scope.records = records;
-            });
+            $scope.recordsResponse = dataService.query();
+            $scope.refresh = function () {
+                $scope.recordResponse = {};
+                $scope.recordResponse = dataService.query();
+            };
+            $scope.disableRefresh = !!$scope.recordResponse;
         }
     ])
     .controller('recordController',
@@ -19,9 +22,6 @@ angular.module('artbookControllers', ['dataServiceModule'])
         '$routeParams',
         'dataService',
         function ($scope, $routeParams, dataService) {
-            $scope.recordId = $routeParams.recordId;
-            dataService.getRecord($scope.recordId, function (record) {
-                $scope.record = record;
-            });
+            $scope.recordResponse = dataService.get({recordId: $routeParams.recordId});
         }
     ]);
