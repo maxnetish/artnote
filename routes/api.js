@@ -12,6 +12,46 @@ var getUserId = function (req) {
     return fakeUserId;
 };
 
+var updatePost = function (id, formData, userId, res) {
+    models.Record.findById(id, function (err, record) {
+        if (err) {
+            res.send(helpersApi.makeResponse(err));
+            return;
+        }
+        if (!record) {
+            res.send(helpersApi.makeResponse({
+                statusCode: 404,
+                message: "Record not found"
+            }));
+            return;
+        }
+        if (record.userId !== userId) {
+            res.send(helpersApi.makeResponse({
+                statusCode: 403,
+                message: "Update forbidden"
+            }));
+            return;
+        }
+        record.updateFromFormData(formData);
+        record.save(function (err, updatedRecord) {
+            res.send(helpersApi.makeResponse(err, updatedRecord));
+        });
+    });
+};
+
+var createPost = function (formData, userId, res) {
+    var newRecord = new models.Record({
+        userId: userId,
+        date: formData.date || new Date(),
+        title: formData.title || 'No title',
+        text: formData.text,
+        tags: formData.tags
+    });
+    newRecord.save(function (err, savedRecord) {
+        res.send(helpersApi.makeResponse(err, savedRecord));
+    });
+};
+
 /* api routes */
 
 router.get('/list', function (req, res) {
@@ -44,50 +84,16 @@ router.get('/record/:recordId', function (req, res) {
     });
 });
 
-router.put('/record/:recordId', function (req, res) {
+router.post('/record/:recordId?', function (req, res) {
     var userId = getUserId(req),
         formData = req.body,
         id = req.params.recordId;
 
-    models.Record.findById(id, function (err, record) {
-        if (err) {
-            res.send(helpersApi.makeResponse(err));
-            return;
-        }
-        if (!record) {
-            res.send(helpersApi.makeResponse({
-                statusCode: 404,
-                message: "Record not found"
-            }));
-            return;
-        }
-        if (record.userId !== userId) {
-            res.send(helpersApi.makeResponse({
-                statusCode: 403,
-                message: "Update forbidden"
-            }));
-            return;
-        }
-        record.updateFromFormData(formData);
-        record.save(function (err, updatedRecord) {
-            res.send(helpersApi.makeResponse(err, updatedRecord));
-        });
-    });
-});
-
-router.post('/record', function (req, res) {
-    var userId = getUserId(req),
-        formData = req.body,
-        newRecord = new models.Record({
-            userId: userId,
-            date: formData.date || new Date(),
-            title: formData.title || 'No title',
-            text: formData.text,
-            tags: formData.tags
-        });
-    newRecord.save(function (err, savedRecord) {
-        res.send(helpersApi.makeResponse(err, savedRecord));
-    });
+    if(id){
+        updatePost(id, formData, userId, res);
+    }else{
+        createPost(formData, userId, res);
+    }
 });
 
 router.delete('/record/:recordId', function (req, res) {
