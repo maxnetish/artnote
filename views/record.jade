@@ -1,12 +1,12 @@
 h1 Details
 p Title:
-p {{recordResponse.data.title}}
+p {{record.title}}
 p Date:
-p {{recordResponse.data.date | date : "d MMMM yyyy H:mm Z"}}
+p {{record.date | date : "d MMMM yyyy H:mm Z"}}
 p Text:
-p {{recordResponse.data.text}}
+p {{record.text}}
 p Tags:
 ul
-    li(ng-repeat='tag in recordResponse.data.tags') {{tag}}
+    li(ng-repeat='tag in record.tags') {{tag}}
 
 
