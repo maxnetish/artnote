@@ -7,7 +7,8 @@ angular.module('artbookRoutes',
     ])
     .constant('ROUTE_PATHS', {
         LIST: '/list',
-        RECORD: '/record/:recordId'
+        RECORD: '/record/:recordId',
+        EDIT: '/edit/:recordId?'
     })
     .config(
     [
@@ -28,6 +29,10 @@ angular.module('artbookRoutes',
                 })
                 .when(paths.RECORD, {
                     templateUrl: 'partials/record',
+                    controller: 'recordController'
+                })
+                .when(paths.EDIT, {
+                    templateUrl: 'partials/edit',
                     controller: 'recordController'
                 })
                 .otherwise({

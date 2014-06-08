@@ -13,4 +13,8 @@ router.get('/record', function (req, res) {
     res.render('record', {});
 });
 
+router.get('/edit', function (req, res) {
+    res.render('edit', {});
+});
+
 module.exports = router;

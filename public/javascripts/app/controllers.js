@@ -21,6 +21,27 @@ angular.module('artbookControllers', ['dataServiceModule'])
         '$routeParams',
         'dataService',
         function ($scope, $routeParams, dataService) {
-            $scope.record = dataService.get({recordId: $routeParams.recordId});
+            var record,
+                recordId = $routeParams.recordId;
+
+            if (recordId) {
+                record = dataService.get({recordId: recordId});
+            } else {
+                record = {
+                    date: new Date()
+                };
+            }
+
+            $scope.record = record;
+
+            $scope.save = function () {
+                dataService.save($scope.record, function () {
+                    //success:
+                    window.location.hash = '!/list';
+                }, function () {
+                    //fail:
+                    alert("Failed");
+                });
+            };
         }
     ]);

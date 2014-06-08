@@ -1,0 +1,15 @@
+h1 Edit note
+p
+    label(for='title') Title:
+    input(name='date', type='text', ng-model='record.title', required, placeholder='Note title')
+p
+    label(for='date') Date:
+    time {{record.date | date: "d MMMM yyyy"}}
+p
+    label(for='text') Text:
+    textarea(name='text', ng-model='record.text', placeholder='Note text here')
+p
+    label(for='tags') Tags:
+    input(name='tags', ng-model='record.tags', art-tag-editor)
+p
+    button(ng-click='save()') Save
