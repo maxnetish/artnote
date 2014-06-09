@@ -4,7 +4,8 @@ p
     input(name='date', type='text', ng-model='record.title', required, placeholder='Note title')
 p
     label(for='date') Date:
-    time {{record.date | date: "d MMMM yyyy"}}
+    input(name='date', type='date', ng-model='record.date', art-date-editor)
+    time {{record.date | artdate}}
 p
     label(for='text') Text:
     textarea(name='text', ng-model='record.text', placeholder='Note text here')
