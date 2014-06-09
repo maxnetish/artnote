@@ -8,10 +8,29 @@ angular.module('artbookControllers', ['dataServiceModule'])
         '$scope',
         'dataService',
         function ($scope, dataService) {
-            $scope.records = dataService.query();
+
+            dataService.provider.query()
+                .then(function (response) {
+                    //success
+                    $scope.records = response.data;
+                }, function (response) {
+                    //fail
+                    alert(response.message);
+                });
+
+            $scope.records = [];
+
             $scope.refresh = function () {
-                $scope.records = dataService.query();
+                dataService.provider.query()
+                    .then(function (response) {
+                        //success
+                        $scope.records = response.data;
+                    }, function (response) {
+                        //fail
+                        alert(response.message);
+                    });
             };
+
             $scope.disableRefresh = false;
         }
     ])
@@ -25,23 +44,39 @@ angular.module('artbookControllers', ['dataServiceModule'])
                 recordId = $routeParams.recordId;
 
             if (recordId) {
-                record = dataService.get({recordId: recordId});
+                dataService.provider.get(recordId)
+                    .then(function (response) {
+                        $scope.record = response.data;
+                    }, function (response) {
+                        //fail
+                        alert(response.message);
+                    });
+                $scope.record = {};
             } else {
-                record = {
-                    date: new Date()
-                };
+                $scope.record = new dataService.RecordModel();
             }
 
-            $scope.record = record;
-
             $scope.save = function () {
-                dataService.save($scope.record, function () {
-                    //success:
-                    window.location.hash = '!/list';
-                }, function () {
-                    //fail:
-                    alert("Failed");
-                });
+                dataService.provider.save($scope.record)
+                    .then(function (response) {
+                        //success
+                        window.location.hash = '!/list';
+                    }, function (response) {
+                        //fail
+                        alert(response.message);
+                    });
             };
+
+            $scope.remove = function () {
+                dataService.provider.remove($scope.record)
+                    .then(function (response) {
+                        //success
+                        window.location.hash = '!/list';
+                    }, function (response) {
+                        //fail
+                        alert(response.message);
+                    });
+            };
+
         }
     ]);
