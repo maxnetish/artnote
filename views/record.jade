@@ -1,14 +1,12 @@
-h1 Details
-a(ng-href='#!/edit/{{record._id}}') Edit
-button(ng-click='remove()') Delete
-p Title:
-p {{record.title}}
-p Date:
-p {{record.date | artdate}}
-p Text:
-p {{record.text}}
-p Tags:
-ul
-    li(ng-repeat='tag in record.tags') {{tag}}
-
+h2 {{record.title}}
+div.note-commands.btn-group
+    a.btn.btn-primary(ng-href='#!/edit/{{record._id}}', role='button') Edit
+    a.btn.btn-danger(ng-click='remove()', href='javascript:void(0)', role='button') Delete
+article
+    p.note-text.text-left {{record.text}}
+    p.date.text-info
+        span.glyphicon.glyphicon-calendar
+        time {{record.date | artdate}}
+    p.tags-list
+        span.label.label-info(ng-repeat='tag in record.tags') {{tag}}
 

@@ -1,8 +1,7 @@
+h2 List
 a(href='#!/edit') Create new note
-button(ng-disabled='disableRefresh', ng-click='refresh()') Refresh
-ul
-    li(ng-repeat='record in records')
-        p {{record.date | date : "d.MM.yy H:mm Z"}}
-        a(ng-href='#!/record/{{record._id}}')
-            p {{record.title}}
+ul.record-list.list-style-none
+    li.inlines-with-margin(ng-repeat='record in records')
+        time {{record.date | artdate}}
+        a(ng-href='#!/record/{{record._id}}') {{record.title}}
 

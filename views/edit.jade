@@ -1,16 +1,19 @@
-h1 Edit note
-p
-    label(for='title') Title:
-    input(name='date', type='text', ng-model='record.title', required, placeholder='Note title')
-p
-    label(for='date') Date:
-    input(name='date', type='date', ng-model='record.date', art-date-editor)
-    time {{record.date | artdate}}
-p
-    label(for='text') Text:
-    textarea(name='text', ng-model='record.text', placeholder='Note text here')
-p
-    label(for='tags') Tags:
-    input(name='tags', ng-model='record.tags', art-tag-editor)
-p
-    button(ng-click='save()') Save
+h2 {{record.title}}
+form(role='form', novalidate, name='recordForm')
+    div.form-group
+        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine') Save
+    div.form-group
+        label(for='title') Title:
+        input.form-control(id='date', type='text', ng-model='record.title', required, placeholder='Note title')
+    div.form-group
+        label(for='date') Date:
+        input.form-control(id='date', type='date', ng-model='record.date', art-date-editor)
+        time.form-control-static {{record.date | artdate}}
+    div.form-group
+        label(for='text') Text:
+        textarea.form-control(id='text', ng-model='record.text', placeholder='Note text here')
+    div.form-group
+        label(for='tags') Tags:
+        input.form-control(id='tags', ng-model='record.tags', art-tag-editor)
+    div.form-group
+        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine') Save
