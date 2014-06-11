@@ -1,12 +1,24 @@
 /**
  * Created by mgordeev on 03.06.2014.
  */
+/* config moment: */
+(function () {
+    var langCode = window.navigator.userLanguage || window.navigator.language;
+    moment.lang(langCode);
+})();
+
 angular.module('artbookApp',
     [
         'ngRoute',
+        'ngSanitize',
+        'pascalprecht.translate',
         'artbookControllers',
         'artbookRoutes'
     ])
+    .config(['$translateProvider', function ($translateProvider) {
+        $translateProvider.useUrlLoader('api/locale');
+        $translateProvider.determinePreferredLanguage();
+    }])
     .directive("artTagEditor", function () {
         return{
             require: 'ngModel',
@@ -62,7 +74,8 @@ angular.module('artbookApp',
         return function (input) {
             // input will be Date
             if (angular.isDate(input)) {
-                return input.toLocaleDateString();
+
+                return moment(input).format('LL');
             } else {
                 return input;
             }

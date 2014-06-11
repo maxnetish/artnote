@@ -1,11 +1,16 @@
 h2 {{record.title}}
 div.note-commands.btn-group
-    a.btn.btn-primary(ng-href='#!/edit/{{record._id}}', role='button') Edit
-    a.btn.btn-danger(ng-click='remove()', href='javascript:void(0)', role='button') Delete
+    a.btn.btn-primary(ng-href='#!/edit/{{record._id}}', role='button')
+        span.glyphicon.glyphicon-edit
+        span &nbsp;{{'EDIT' | translate}}
+    a.btn.btn-danger(ng-click='remove()', href='javascript:void(0)', role='button')
+        span.glyphicon.glyphicon-remove
+        span &nbsp;{{'DELETE' | translate}}
 article
-    p.note-text.text-left {{record.text}}
+    p.note-text.text-left(ng-bind-html='record.text')
     p.date.text-info
         span.glyphicon.glyphicon-calendar
+        span &nbsp;
         time {{record.date | artdate}}
     p.tags-list
         span.label.label-info(ng-repeat='tag in record.tags') {{tag}}

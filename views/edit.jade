@@ -1,19 +1,36 @@
 h2 {{record.title}}
 form(role='form', novalidate, name='recordForm')
     div.form-group
-        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine') Save
+        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine')
+            span.glyphicon.glyphicon-save
+            span &nbsp;{{'SAVE' | translate}}
     div.form-group
-        label(for='title') Title:
+        label(for='title') {{'TITLE' | translate}}:
         input.form-control(id='date', type='text', ng-model='record.title', required, placeholder='Note title')
     div.form-group
-        label(for='date') Date:
+        label(for='date') {{'DATE' | translate}}:
         input.form-control(id='date', type='date', ng-model='record.date', art-date-editor)
-        time.form-control-static {{record.date | artdate}}
     div.form-group
-        label(for='text') Text:
+        label(for='text') {{'TEXT' | translate}}:
         textarea.form-control(id='text', ng-model='record.text', placeholder='Note text here')
     div.form-group
-        label(for='tags') Tags:
+        label(for='tags') {{'TAGS' | translate }}:
         input.form-control(id='tags', ng-model='record.tags', art-tag-editor)
-    div.form-group
-        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine') Save
+    div.form-group.btn-group
+        button.btn(ng-click='preview=!preview', ng-class='{active: preview, "btn-warning": recordForm.$invalid, "btn-success": !recordForm.$invalid}')
+            span.glyphicon(ng-class='{"glyphicon-eye-open": preview, "glyphicon-eye-close": !preview}')
+            span &nbsp;{{'PREVIEW' | translate}}
+        button.btn.btn-primary(ng-click='save()', ng-disabled='recordForm.$invalid || recordForm.$pristine')
+            span.glyphicon.glyphicon-save
+            span &nbsp;{{'SAVE' | translate}}
+    div.form-group(ng-if='preview')
+        label(for='preview') {{'PREVIEW' | translate}}:
+        div.form-control-static(id='preview')
+            h3(ng-bind='record.title')
+            p(ng-bind-html='record.text')
+            p.date.text-info
+                span.glyphicon.glyphicon-calendar
+                span &nbsp;
+                time {{record.date | artdate}}
+            p.tags-list
+                span.label.label-info(ng-repeat='tag in record.tags') {{tag}}

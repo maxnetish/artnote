@@ -2,7 +2,7 @@
  * Created by mgordeev on 04.06.2014.
  */
 
-angular.module('dataServiceModule', ['ngResource'])
+angular.module('dataServiceModule', [])
     .config(
     [
         '$httpProvider',

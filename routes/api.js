@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var helpersApi = require('../helpers').api;
+var locales = require('../locale');
 var fakeUserId = 'fake_user_id';
 
 var getUserId = function (req) {
@@ -89,9 +90,9 @@ router.post('/record/:recordId?', function (req, res) {
         formData = req.body,
         id = req.params.recordId;
 
-    if(id){
+    if (id) {
         updatePost(id, formData, userId, res);
-    }else{
+    } else {
         createPost(formData, userId, res);
     }
 });
@@ -131,6 +132,13 @@ router.delete('/record/:recordId', function (req, res) {
             res.send(helpersApi.makeResponse(err));
         });
     });
+});
+
+router.get('/locale', function (req, res) {
+    var langCode = req.query.lang || 'en',
+        localeTable = locales[langCode] || locales.en;
+
+    res.send(localeTable);
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
-h2 List
-a(href='#!/edit') Create new note
+h2 {{'LIST' | translate}}
+a(href='#!/edit') {{'NEW_NOTE' | translate}}
 ul.record-list.list-style-none
-    li.inlines-with-margin(ng-repeat='record in records')
+    li.inlines-with-margin(ng-repeat='record in records | orderBy:"date"')
         time {{record.date | artdate}}
         a(ng-href='#!/record/{{record._id}}') {{record.title}}
 
